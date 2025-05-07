@@ -1,0 +1,101 @@
+clc;
+clear all;
+bits=1:1:5;
+%load("mse_lsa0.mat");
+load("LSxin.mat");
+load("MLxin.mat");
+%load("mse_mla0.mat");
+load("mycrbdata_bits00.mat");
+load("QVBLbitsdata.mat");%QVBL02
+%load("qvbidataa0.mat");
+load("mycrbdata_bitsa0.mat");
+%load("mlfin3.mat");
+load("YANxin.mat");
+load('qbcrb11.mat')
+
+figure;
+plot(bits,mse_yc,'r--o', 'LineWidth', 3);%mse_yaab(1,2:6)
+ hold on;
+ grid on;
+ %plot(SNR,mse_lls,'g');
+ plot(bits, mse_ls, 's-g', 'LineWidth', 3);%, iter_no, x_sd(:,2), 'k+'
+ plot(bits, mse_ml, '^--b', 'LineWidth', 3);
+ plot(bits, mse_ycyan, 'x-c', 'LineWidth', 3);
+ plot(bits,crbccc,"b-x", 'LineWidth', 3);
+ %plot(bits,qcrbccc,"m-.", 'LineWidth', 3); 
+ plot(bits,qbcrbee,"m-.", 'LineWidth', 3); 
+ %title(' ');
+ xlabel('Quantized Bits');
+ ylabel('RMSE of Target Localization');
+set(gca,'XTick',1:1:5);
+
+for ta=1:1:5
+y = mse_yaa(50,:,ta);
+ AX=size(y,2);
+error(ta,:) = std(y');%[0.01 0.055 0.052 0 0.067 0.119 0.106 0 0.036 0.077 0.060 0 0.029 0.055 0.051]; % size of error
+yy=(mse_yc)';
+% errorbar(yy(ta,:),error(ta,:) ,'.');
+% XTicka=1:1:AX;
+% set(gca, 'XTick',XTicka);
+end
+errorbar(yy,error ,'.', 'Color', 'red','LineWidth', 2);
+% ee.Color = 'red';
+% ee.LineWidth = 2;
+%XTicka=1:1:AX;
+%set(gca, 'XTick',XTicka);
+hold on;
+for ta=1:1:5
+y = mse_ls_nraa(ta,:);%[0.776 0.707 1.269 0 0.749 0.755 1.168 0 0.813 0.734 1.270 0 0.845 0.844 1.286];%1 ??1?????
+ AX=size(y,2);
+% heng=1:1:AX;
+% meann(ta,:)=mean(y,2);
+error(ta,:) = std(y');%[0.01 0.055 0.052 0 0.067 0.119 0.106 0 0.036 0.077 0.060 0 0.029 0.055 0.051]; % size of error
+yy=(mse_ls)';
+% errorbar(yy(ta,:),error(ta,:) ,'.');
+% XTicka=1:1:AX;
+% set(gca, 'XTick',XTicka);
+end
+errorbar(yy,error ,'.','Color', 'green','LineWidth', 2);
+
+hold on;
+for ta=1:1:5
+y = mse_ml_gnaa(ta,:);%[0.776 0.707 1.269 0 0.749 0.755 1.168 0 0.813 0.734 1.270 0 0.845 0.844 1.286];%1 ??1?????
+ AX=size(y,2);
+% heng=1:1:AX;
+% meann(ta,:)=mean(y,2);
+error(ta,:) = std(y');%[0.01 0.055 0.052 0 0.067 0.119 0.106 0 0.036 0.077 0.060 0 0.029 0.055 0.051]; % size of error
+yy=(mse_ml)';
+% errorbar(yy(ta,:),error(ta,:) ,'.');
+% XTicka=1:1:AX;
+% set(gca, 'XTick',XTicka);
+end
+errorbar(yy,error ,'.','Color', 'blue','LineWidth', 2);
+% e.Color = '[0 0.4470 0.7410]';
+% e.LineWidth = 2;
+%figure
+%hold on
+%bar(meann)
+%errorbar(heng,meann,error ,'-.')
+hold on;
+for ta=1:1:5
+y = mse__ycyana(ta,:);%[0.776 0.707 1.269 0 0.749 0.755 1.168 0 0.813 0.734 1.270 0 0.845 0.844 1.286];%1 ??1?????
+ AX=size(y,2);
+% heng=1:1:AX;
+% meann(ta,:)=mean(y,2);
+error(ta,:) = std(y');%[0.01 0.055 0.052 0 0.067 0.119 0.106 0 0.036 0.077 0.060 0 0.029 0.055 0.051]; % size of error
+yy=(mse_ycyan)';
+% errorbar(yy(ta,:),error(ta,:) ,'.');
+% XTicka=1:1:AX;
+% set(gca, 'XTick',XTicka);
+end
+errorbar(yy,error ,'.','Color', '[0,1,1]','LineWidth', 2);
+% bar(meann)
+
+%XTickLabel={'1' ; '2'; '3' ; '4'};
+% AX=size(y,1);
+%  XTick=1:1:AX;
+% % set(gca, 'XTick',XTick);
+% set(gca, 'XTick',XTick);
+% xlabel('Iter Number');
+% ylabel('Standard Deviations Error Bar');
+legend('QVBL-TS','LLS','GN-ML','SDP-Yan','CRB','QBCRB');%legend('VBI','LS','CRB','QCRB');,'LLS','BCRB'
